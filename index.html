@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>8 Марта — Христово Благоухание</title>
+    <link href="https://fonts.googleapis.com/css2?family=Marck+Script&family=Montserrat:wght@300;400;600&family=Playfair+Display:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-color: #fffafb;
+            --accent-soft: #f4dcd6;
+            --text-main: #5d534a;
+            --gold: #c5a059;
+            --rose: #d68189;
+        }
+
+        * { box-sizing: border-box; }
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Montserrat', sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            line-height: 1.6;
+            overflow-x: hidden;
+            position: relative;
+            min-height: 100vh;
+        }
+
+        /* Стили для лепестков */
+        .petal {
+            position: fixed;
+            top: -50px;
+            font-size: 20px;
+            pointer-events: none;
+            z-index: 9999;
+            user-select: none;
+            animation: fall linear forwards;
+        }
+
+        @keyframes fall {
+            0% {
+                transform: translateY(0) translateX(0) rotate(0deg);
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(110vh) translateX(100px) rotate(360deg);
+                opacity: 0;
+            }
+        }
+
+        /* Главный экран */
+        header {
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 20px;
+            background: radial-gradient(circle at center, rgba(244, 220, 214, 0.4) 0%, rgba(255, 255, 255, 0) 70%);
+        }
+
+        .main-title {
+            font-family: 'Playfair Display', serif;
+            font-size: clamp(2rem, 8vw, 4rem);
+            color: var(--text-main);
+            margin-bottom: 10px;
+            z-index: 2;
+        }
+
+        .scripture-main {
+            font-family: 'Marck Script', cursive;
+            font-size: 1.5rem;
+            color: var(--rose);
+            max-width: 600px;
+            margin-top: 20px;
+            z-index: 2;
+        }
+
+        /* Таймер */
+        .timer-container {
+            margin: 40px 0;
+            display: flex;
+            gap: 15px;
+            z-index: 2;
+        }
+        .timer-item {
+            background: white;
+            padding: 15px;
+            border-radius: 12px;
+            min-width: 70px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+        }
+        .timer-num {
+            display: block;
+            font-size: 1.8rem;
+            font-weight: 600;
+            color: var(--gold);
+        }
+        .timer-label { font-size: 0.7rem; text-transform: uppercase; }
+
+        /* Блок приглашения */
+        .invitation {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 60px 20px;
+            text-align: center;
+            background: white;
+            border-radius: 30px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.03);
+            position: relative;
+            z-index: 2;
+        }
+
+        .info-box {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            margin: 30px 0;
+            flex-wrap: wrap;
+        }
+        .info-item {
+            font-weight: 600;
+            color: var(--gold);
+            border-bottom: 1px solid var(--accent-soft);
+            padding-bottom: 5px;
+        }
+
+        /* Интерактив */
+        .wish-section {
+            padding: 80px 20px 40px;
+            text-align: center;
+            position: relative;
+            z-index: 2;
+        }
+        .btn-wish {
+            background: var(--text-main);
+            color: white;
+            border: none;
+            padding: 18px 35px;
+            border-radius: 50px;
+            font-family: 'Montserrat', sans-serif;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: 0.4s;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+        }
+        .btn-wish:hover {
+            background: var(--rose);
+            transform: scale(1.05);
+        }
+        #wish-display {
+            margin-top: 40px;
+            font-family: 'Playfair Display', serif;
+            font-style: italic;
+            font-size: 1.4rem;
+            color: var(--rose);
+            min-height: 60px;
+            padding: 0 20px;
+        }
+
+        /* Блок с фото */
+        .photo-container {
+            max-width: 600px;
+            margin: 20px auto;
+            padding: 0 20px;
+            text-align: center;
+            position: relative;
+            z-index: 2;
+        }
+        .photo-container img {
+            width: 100%;
+            height: auto;
+            border-radius: 20px;
+            border: 8px solid white;
+            box-shadow: 0 15px 45px rgba(0,0,0,0.1);
+        }
+
+        footer {
+            padding: 10px;
+            text-align: center;
+            font-size: 0.8rem;
+            letter-spacing: 1px;
+            opacity: 0.7;
+            position: relative;
+            z-index: 2;
+        }
+
+        @media (max-width: 600px) {
+            .info-box { flex-direction: column; gap: 10px; }
+            .timer-item { padding: 10px; min-width: 60px; }
+            .timer-num { font-size: 1.4rem; }
+            .invitation { margin: 0 15px; border-radius: 20px; }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div style="text-transform: uppercase; letter-spacing: 3px; font-size: 0.8rem; margin-bottom: 20px;">8 МАРТА</div>
+        <h1 class="main-title">Христово Благоухание</h1>
+        
+        <div class="timer-container" id="timer">
+            <div class="timer-item"><span class="timer-num" id="days">00</span><span class="timer-label">Дней</span></div>
+            <div class="timer-item"><span class="timer-num" id="hours">00</span><span class="timer-label">Часов</span></div>
+            <div class="timer-item"><span class="timer-num" id="minutes">00</span><span class="timer-label">Мин</span></div>
+            <div class="timer-item"><span class="timer-num" id="seconds">00</span><span class="timer-label">Сек</span></div>
+        </div>
+
+        <p class="scripture-main">
+            «Ибо мы для Бога благовоние, возжигаемое Христом...» <br>
+            <span style="font-family: 'Montserrat'; font-size: 0.9rem; font-style: normal;">2 Коринфянам 2:15</span>
+        </p>
+    </header>
+
+    <section class="invitation">
+        <p style="font-size: 1.1rem;">Дорогие, прекрасные девушки!</p>
+        <p>С радостью приглашаем вас на праздничную встречу, посвящённую 8 Марта — дню, когда особенно хочется сказать, какие вы ценные и любимые! 💖</p>
+        
+        <div class="info-box">
+            <div class="info-item">🗓️ 8 Марта, 18:00</div>
+            <div class="info-item">📍 Старогорняцкая 2</div>
+        </div>
+
+        <p style="font-style: italic; color: #888; font-size: 0.95rem; padding: 0 20px;">
+            Это будет особенное время радости, тёплого общения и приятных сюрпризов. Вас ждёт уютная атмосфера, вдохновляющая программа и вкусные угощения.
+        </p>
+        
+        <p style="margin-top: 30px; font-weight: 600; color: var(--rose);">
+            Пусть этот день станет напоминанием о том, что каждая из вас — драгоценное благоухание Христово! 🌷
+        </p>
+    </section>
+
+    <section class="wish-section">
+        <h2>Пожелание лично для тебя</h2>
+        <p style="margin-bottom: 30px; opacity: 0.7;">Нажми на кнопку и прими добрые слова</p>
+        <button class="btn-wish" onclick="generateWish()">Узнать пожелание ✨</button>
+        <div id="wish-display"></div>
+    </section>
+
+    <div class="photo-container">
+        <img src="8.jpg" alt="Праздничное фото">
+    </div>
+
+    <footer>
+        <p>ЖДЁМ ВАС С НЕТЕРПЕНИЕМ!<br>С любовью, команда братьев</p>
+    </footer>
+
+    <script>
+        // ТАЙМЕР
+        const countDownDate = new Date("March 8, 2026 18:00:00").getTime();
+
+        const x = setInterval(function() {
+            const now = new Date().getTime();
+            const distance = countDownDate - now;
+
+            const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+            const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+            document.getElementById("days").innerHTML = days;
+            document.getElementById("hours").innerHTML = hours;
+            document.getElementById("minutes").innerHTML = minutes;
+            document.getElementById("seconds").innerHTML = seconds;
+
+            if (distance < 0) {
+                clearInterval(x);
+                document.getElementById("timer").innerHTML = "ПРАЗДНИК НАЧАЛСЯ! ✨";
+            }
+        }, 1000);
+
+        // ПОЖЕЛАНИЯ
+        const wishes = [
+            "Пусть твое сердце всегда будет наполнено Божьим миром 🌸",
+            "Ты — уникальный аромат Христа в этом мире. Свети ярко! ✨",
+            "Желаем тебе расцветать в Божьей любви каждый день 🌷",
+            "Пусть твоя вера будет крепкой, а радость — бесконечной! 💖",
+            "Ты драгоценна в глазах Творца. Помни об этом всегда 💎",
+            "Пусть этот год принесет тебе удивительные откровения о Его милости!",
+            "Твоя доброта меняет этот мир к лучшему. Благоухай! 🌿"
+        ];
+
+        function generateWish() {
+            const display = document.getElementById('wish-display');
+            const randomWish = wishes[Math.floor(Math.random() * wishes.length)];
+            display.style.opacity = 0;
+            setTimeout(() => {
+                display.innerText = randomWish;
+                display.style.transition = "1s";
+                display.style.opacity = 1;
+            }, 300);
+        }
+
+        // ПАДАЮЩИЕ ЛЕПЕСТКИ
+        function createPetal() {
+            const petal = document.createElement("div");
+            petal.className = "petal";
+            const flowers = ["🌸", "🥰"];
+            petal.innerText = flowers[Math.floor(Math.random() * flowers.length)];
+            petal.style.left = Math.random() * window.innerWidth + "px";
+            petal.style.animationDuration = (Math.random() * 5 + 5) + "s";
+            petal.style.fontSize = (Math.random() * 10 + 15) + "px";
+            document.body.appendChild(petal);
+            setTimeout(() => {
+                petal.remove();
+            }, 10000);
+        }
+        setInterval(createPetal, 700);
+    </script>
+</body>
+</html>
